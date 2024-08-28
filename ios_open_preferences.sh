@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Get the identifier of the active simulator using simctl
-DEVICE_ID=$(xcrun simctl list devices | grep -m1 "(Booted)" | awk '{print $2}' | tr -d '()')
+# Adjusted to capture the fourth column which is the actual device ID (UUID)
+DEVICE_ID=$(xcrun simctl list devices | grep -m1 "(Booted)" | awk '{print $4}' | tr -d '()')
 
 # Check if the device ID was found correctly
 if [ -z "$DEVICE_ID" ]; then
@@ -26,5 +27,10 @@ fi
 
 # Find and open the plist file on the simulator device
 find . -name "$PLIST_NAME.plist" | while read -r preferencesFile; do
-    open "$preferencesFile"
+    if [ -f "$preferencesFile" ]; then
+        open "$preferencesFile"
+    else
+        echo "Plist file not found."
+        exit 1
+    fi
 done
