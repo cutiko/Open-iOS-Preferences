@@ -1,18 +1,39 @@
-# Why?
+# Open iOS Preferences Script
 
-When working in iOS with user preferences sometimes we need to quickly reset them. I found an [article](https://pradnya-nikam.medium.com/view-and-change-user-defaults-on-ios-simulator-d2c3fc3b82b1) about how to do it. Doing it manually kind of get tedious.
+This script allows you to automatically open the preferences `.plist` file of an iOS app running in a simulator. It dynamically retrieves the simulator's device ID and the app's bundle identifier (`CFBundleIdentifier`) without requiring manual input.
 
-So I did this short script, it has to be run for every install (new installs from XCode change the name of the installation folder).
+## Requirements
 
-# How?
+- macOS
+- Xcode Command Line Tools
+- A booted iOS simulator
 
-Download the script and then run it with two arguments:
+## How It Works
 
- - Device ID
- - Application bundle ID
+The script:
+1. Retrieves the `DEVICE_ID` of the currently booted iOS simulator.
+2. Automatically identifies the `.plist` file associated with the app’s `CFBundleIdentifier` inside the simulator’s directory.
+3. Opens the `.plist` file for viewing or editing.
 
-For example:
+## Usage
 
-```
-bash ios_open_preferences.sh FEFD68AF-D256-4GHC-99EE-98810E9L8160 com.company.AppName
-```
+### Running the Script
+
+1. Clone this repository or copy the script to your local machine.
+2. Make sure the script is executable. You can use the following command:
+
+    ```bash
+    chmod +x open_preferences.sh
+    ```
+
+3. Run the script while your iOS app is running in the simulator:
+
+    ```bash
+    ./open_preferences.sh
+    ```
+
+The script will automatically find and open the `.plist` file for the running app in the simulator.
+
+### Customizing the App Bundle Identifier
+
+By default, the script attempts to read the app's `CFBundleIdentifier` fr
